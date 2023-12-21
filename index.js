@@ -23,6 +23,7 @@ app.post('/validate-recaptcha-token', async (req, res) => {
             url: uri,
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
         })
         console.log(result.data);
