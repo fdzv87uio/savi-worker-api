@@ -3,8 +3,13 @@ const express = require('express');
 const axios = require("axios");
 const app = express();
 const port = 3000;
+
 app.use(express.json());
 
+app.get('/', async (req, res) => {
+    console.log("HAHAHAHA")
+    res.send("Welcome");
+})
 
 app.post('/validate-recaptcha-token', async (req, res) => {
     try {
