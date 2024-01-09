@@ -10,7 +10,7 @@ app.options('*', cors());
 
 app.get('/', async (req, res) => {
     console.log("E36-API")
-    res.send("Welcome");
+    res.send("E36-API");
 })
 
 app.post('/validate-recaptcha-token', async (req, res) => {
