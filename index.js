@@ -9,7 +9,7 @@ app.use(cors());
 app.options('*', cors());
 
 app.get('/', async (req, res) => {
-    console.log("HAHAHAHA")
+    console.log("E36-API")
     res.send("Welcome");
 })
 
