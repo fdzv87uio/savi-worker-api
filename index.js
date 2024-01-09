@@ -9,7 +9,7 @@ app.use(cors());
 app.options('*', cors());
 
 app.get('/', async (req, res) => {
-    console.log("E36-API")
+    console.log("E36-APIee")
     res.send("E36-API");
 })
 
