@@ -36,5 +36,5 @@ app.post('/validate-recaptcha-token', async (req, res) => {
   
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Servers running at http://localhost:${port}`);
 });
