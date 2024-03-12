@@ -31,7 +31,7 @@ let waitInterval = 7000;
 
 app.get('/', async (req, res) => {
     console.log("E36-APIee")
-    res.send("E36-API");
+    res.send("Pedevco-API");
 })
 
 
