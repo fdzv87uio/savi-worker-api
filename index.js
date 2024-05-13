@@ -42,16 +42,6 @@ async function scrapeTipti(query, pageNum, driver) {
   }
 }
 
-app.on("connection", function (socket) {
-  https.get(apiUrl, (res) => {
-    const time = new Date().toISOString();
-    console.log(
-      `SOCKET: Server pinged with status code: ${res.statusCode} at time ${time}.`
-    );
-  });
-  socket.setTimeout(13 * 60 * 1000); // 30 second timeout. Change this as you see fit.
-});
-
 app.get("/", async (req, res) => {
   console.log("Bienvenido a Plaza Predial API");
   res.send("Plaza-Predial-API");
