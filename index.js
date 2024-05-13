@@ -1,4 +1,5 @@
 require("dotenv").config();
+const https = require("https");
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -10,6 +11,17 @@ app.use(cors());
 app.options("*", cors());
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const apiUrl = process.env.API_URL;
+const cron = require("node-cron");
+
+cron.schedule("*/5 * * * *", function () {
+  https.get(apiUrl, (res) => {
+    const time = new Date().toISOString();
+    console.log(
+      `Server pinged with status code: ${res.statusCode} at time ${time}.`
+    );
+  });
+});
 
 const { Builder, By, Key, until } = require("selenium-webdriver");
 
@@ -29,6 +41,10 @@ async function scrapeTipti(query, pageNum, driver) {
     console.log(error);
   }
 }
+
+app.on("connection", function (socket) {
+  socket.setTimeout(13 * 60 * 1000); // 30 second timeout. Change this as you see fit.
+});
 
 app.get("/", async (req, res) => {
   console.log("Bienvenido a Plaza Predial API");
@@ -118,4 +134,10 @@ app.post("/validate-recaptcha-token", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Servers running at port:${port}`);
+  https.get(apiUrl, (res) => {
+    const time = new Date().toISOString();
+    console.log(
+      `Server pinged with status code: ${res.statusCode} at time ${time}.`
+    );
+  });
 });
