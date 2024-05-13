@@ -11,17 +11,6 @@ app.use(cors());
 app.options("*", cors());
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-const apiUrl = process.env.API_URL;
-// const cron = require("node-cron");
-
-// cron.schedule("*/5 * * * *", function () {
-//   https.get(apiUrl, (res) => {
-//     const time = new Date().toISOString();
-//     console.log(
-//       `Server pinged with status code: ${res.statusCode} at time ${time}.`
-//     );
-//   });
-// });
 
 const { Builder, By, Key, until } = require("selenium-webdriver");
 
@@ -45,6 +34,13 @@ async function scrapeTipti(query, pageNum, driver) {
 app.get("/", async (req, res) => {
   console.log("Bienvenido a Plaza Predial API");
   res.send("Plaza-Predial-API");
+});
+
+app.get("/cron-job", async (req, res) => {
+  const time = new Date().toISOString();
+  const msg = `API triggered at ${time}`;
+  console.log(msg);
+  res.json({ status: "success", data: msg });
 });
 
 app.get("/crawl-tripti/:query/:pageNum", async (req, res) => {
