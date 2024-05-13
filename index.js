@@ -43,6 +43,12 @@ async function scrapeTipti(query, pageNum, driver) {
 }
 
 app.on("connection", function (socket) {
+  https.get(apiUrl, (res) => {
+    const time = new Date().toISOString();
+    console.log(
+      `SOCKET: Server pinged with status code: ${res.statusCode} at time ${time}.`
+    );
+  });
   socket.setTimeout(13 * 60 * 1000); // 30 second timeout. Change this as you see fit.
 });
 
@@ -134,10 +140,4 @@ app.post("/validate-recaptcha-token", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Servers running at port:${port}`);
-  https.get(apiUrl, (res) => {
-    const time = new Date().toISOString();
-    console.log(
-      `Server pinged with status code: ${res.statusCode} at time ${time}.`
-    );
-  });
 });
