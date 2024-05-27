@@ -28,7 +28,8 @@ async function scrapeFacebook(driver, page, address, cat, op) {
       )
     );
     await closeModal.click();
-    await driver.switchTo().window(allWindowHandles[0]);
+    await driver.switchTo().defaultContent();
+    await driver.manage().setTimeouts({ implicit: waitInterval });
     const title = await driver
       .findElement(
         By.xpath(
@@ -126,7 +127,7 @@ async function scrapeFacebook(driver, page, address, cat, op) {
     const location = await getGeolocation(address);
 
     const resultItems = {
-      description: `${title} - ${description}`,
+      description: `${title} - ${description.replaceAll("\n", " ")}`,
       category: cat,
       operation: op,
       address: location.formatted,
