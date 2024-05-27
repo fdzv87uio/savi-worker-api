@@ -13,6 +13,14 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const { Builder, By, Key, until } = require("selenium-webdriver");
 
+//Cron Job End Point
+app.get("/cron-job", async (req, res) => {
+  const time = new Date().toISOString();
+  const msg = `API triggered at ${time}`;
+  console.log(msg);
+  res.json({ status: "success", data: msg });
+});
+
 // Scrapper Function
 async function scrapeFacebook(driver, page, address, cat, op) {
   let waitInterval = 20000;
@@ -198,12 +206,12 @@ async function createReferal(info) {
     console.log(error);
   }
 }
-
+//Home
 app.get("/", async (req, res) => {
   console.log("Bienvenido a Plaza Predial API");
   res.send("Plaza-Predial-API");
 });
-
+// Facebook Add
 app.get("/crawl-facebook", async (req, res) => {
   const { page, address, cat, op } = req.query;
   console.log("page: " + page);
@@ -213,6 +221,7 @@ app.get("/crawl-facebook", async (req, res) => {
   res.json(result);
 });
 
+// Stripe Payment
 app.post("/pay", async (req, res) => {
   try {
     const amount = 2000; // lowest denomination
@@ -231,7 +240,7 @@ app.post("/pay", async (req, res) => {
     console.log(error.message);
   }
 });
-
+// Stripe Local Check
 app.post("/stripe", (req, res) => {
   if (req.body.type === "payment_intent.created") {
     console.log(`${req.body.data.object.metadata.name} initated payment!`);
@@ -240,7 +249,7 @@ app.post("/stripe", (req, res) => {
     console.log(`${req.body.data.object.metadata.name} succeeded payment!`);
   }
 });
-
+// Recaptcha
 app.post("/validate-recaptcha-token", async (req, res) => {
   try {
     const secret = process.env.RECAPTCHA_SECRET;
