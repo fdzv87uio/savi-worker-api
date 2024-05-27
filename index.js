@@ -177,6 +177,7 @@ async function getGeolocation(query) {
         latitude: data.results[0].geometry.lat,
         longitude: data.results[0].geometry.lng,
         formatted: data.results[0].formatted,
+        data: data.results[0],
       };
       return info;
     }
