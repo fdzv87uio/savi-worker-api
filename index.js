@@ -211,6 +211,12 @@ app.get("/", async (req, res) => {
   console.log("Bienvenido a Plaza Predial API");
   res.send("Plaza-Predial-API");
 });
+//Get OC reverse geocoding
+app.get("/geocode", async (req, res) => {
+  const { lat, lon } = req.query;
+  const newRes = await getGeolocation(`${lat},${lon}`);
+  res.json(newRes);
+});
 // Facebook Add
 app.get("/crawl-facebook", async (req, res) => {
   const { page, address, cat, op } = req.query;
