@@ -13,6 +13,26 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const { Builder, By, Key, until } = require("selenium-webdriver");
 
+//BBimg image upload
+
+async function uploadImage(img) {
+  try {
+    let myApiKey = process.env.IMGBB_KEY;
+    let formData = new FormData();
+    formData.append("image", img);
+    const { data } = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${myApiKey}`,
+      formData
+    );
+    console.log("data");
+    console.log(data);
+    let imageUrl = data.data.url;
+    return imageUrl;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 //Cron Job End Point
 app.get("/cron-job", async (req, res) => {
   const time = new Date().toISOString();
@@ -134,6 +154,15 @@ async function scrapeFacebook(driver, page, address, cat, op) {
       .getAttribute("src");
     const location = await getGeolocation(address);
 
+    const image1Url = await uploadImage(image1);
+    const image2Url = await uploadImage(image2);
+    const image3Url = await uploadImage(image3);
+    const image4Url = await uploadImage(image4);
+    const image5Url = await uploadImage(image5);
+    const image6Url = await uploadImage(image6);
+    const image7Url = await uploadImage(image7);
+    const image8Url = await uploadImage(image8);
+
     const resultItems = {
       description: `${title} - ${description.replaceAll("\n", " ")}`,
       category: cat,
@@ -147,14 +176,14 @@ async function scrapeFacebook(driver, page, address, cat, op) {
       name: "Plaza Predial",
       latitude: location.latitude,
       longitude: location.longitude,
-      image1: image1,
-      image2: image2,
-      image3: image3,
-      image4: image4,
-      image5: image5,
-      image6: image6,
-      image7: image7,
-      image8: image8,
+      image1: image1Url,
+      image2: image2Url,
+      image3: image3Url,
+      image4: image4Url,
+      image5: image5Url,
+      image6: image6Url,
+      image7: image7Url,
+      image8: image8Url,
     };
     console.log(resultItems);
     const newReferal = await createReferal(resultItems);
