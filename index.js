@@ -246,8 +246,8 @@ async function createReferal(info) {
 }
 //Home
 app.get("/", async (req, res) => {
-  console.log("Bienvenido a Plaza Predial API");
-  res.send("Plaza-Predial-API");
+  console.log("Welcome to SAVI WORKER API");
+  res.send("Welcome to SAVI WORKER API");
 });
 //Get OC reverse geocoding
 app.get("/geocode", async (req, res) => {
