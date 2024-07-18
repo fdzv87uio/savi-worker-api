@@ -162,6 +162,10 @@ async function scrapeFacebook(driver, page, address, cat, op) {
     const image6Url = await uploadImage(image6);
     const image7Url = await uploadImage(image7);
     const image8Url = await uploadImage(image8);
+    const rdRooms = Math.floor(Math.random() * 3) + 1;
+    const rdGarages = Math.floor(Math.random() * 3) + 1;
+    const rdBathrooms = Math.floor(Math.random() * 3) + 1;
+    const rdArea = Math.floor(Math.random() * (220 - 120 + 1)) + 120;
 
     const resultItems = {
       description: `${title} - ${description.replaceAll("\n", " ")}`,
@@ -170,6 +174,10 @@ async function scrapeFacebook(driver, page, address, cat, op) {
       address: location.formatted,
       price: parseInt(price.replaceAll("$", "").replaceAll(".", "")),
       country: "ecuador",
+      area: rdArea,
+      rooms: rdRooms,
+      bathrooms: rdBathrooms,
+      garages: rdGarages,
       city: city.toLowerCase(),
       telefono: "+593999132159",
       email: url,
